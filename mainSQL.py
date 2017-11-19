@@ -16,12 +16,12 @@ def mainMenu():
 
 def main():
     temp = mainMenu()
-##    if temp == 1:
-##        inputDoctor()
-##    if temp == 2:
-##        inputPatient()
-##    if temp == 3:
-##        inputPrescription()
+    if temp == 1:
+        inputDoctor()
+    if temp == 2:
+        inputPatient()
+    if temp == 3:
+        inputPrescription()
     if temp == 4:
         lookupHospital()
     if temp == 5:
@@ -33,40 +33,60 @@ def main():
     if temp == 8:
         displayAll()
     if temp == 9:
-        exit()
+        close()
     
-##def inputDoctor():
-##    ##SQL CODE
-##    
-##def inputPatient():
-##    ##SQL CODE
-##    
-##def inputPrescription():
-##    ##SQL CODE
-##def lookupHospital():
-##    ##SQL CODE
+def inputDoctor():
+    print("-----------------------------------------------------")
+    main()
+def inputPatient():
+    print("-----------------------------------------------------")
+    main()
+def inputPrescription():
+    print("-----------------------------------------------------")
+    main()
+    
+def lookupHospital():
+    zipCode = input("Enter the zip code of the hospital to search by: ")
+    mycursor.execute("USE MOGRENT")
+    mycursor.execute("SELECT * FROM hospital WHERE zipcode = (%s)" %(zipCode))
+    print(mycursor.fetchall())
+    print("-----------------------------------------------------")
+    main()
 def lookupPatient():
     doB = int(input("Enter the patients date of birth to search by: "))
-    ##SQL CODE
+    mycursor.execute("USE MOGRENT")
+    mycursor.execute("SELECT * FROM patient WHERE DOB = (%s)" %(doB))
+    print(mycursor.fetchall())
+    print("-----------------------------------------------------")
+    main()
 def lookupPrescription():
-    presID = int(input("Enter the prescription ID to search by: "))
-    ##SQL CODE
+    presID = input("Enter the prescription ID to search by: ")
+    mycursor.execute("USE MOGRENT")
+    mycursor.execute("SELECT * FROM prescription WHERE presID = (%s)" %(presID))
+    print(mycursor.fetchall())
+    print("-----------------------------------------------------")
+    main()
 def lookupDoctor():
-    fname = str(input("Enter a first name to search by: "))
-    ##SQL CODE
+    fname = input("Enter a first name to search by: ")
+    mycursor.execute("USE MOGRENT")
+    mycursor.execute("SELECT * FROM doctor WHERE fName = ('%s')" %(fname))
+    print(mycursor.fetchall())
+    print("-----------------------------------------------------")
+    main()
 def displayAll():
     print("All the data will be displayed")
-    db = 'test'
-    sqlCommand.selectmySQL(mycursor,db)
-    
-    ##SQL CODE
-def exit():
-    quit()
+    mycursor.execute("USE MOGRENT")
+    mycursor.execute("SELECT * FROM hospital, doctor, patient, prescription")
+    print(mycursor.fetchall())
+    print("-----------------------------------------------------")
+    main()
+def close():
+    exit()
 
 
-    
 conn = mysql.connector.connect(user = 'root',
                            password = '#ALC2016',
                            host = 'localhost')
 mycursor = conn.cursor()
+
 main()
