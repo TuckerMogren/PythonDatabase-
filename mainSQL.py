@@ -109,9 +109,13 @@ def displayAll():
 def close():
     exit()
 
+def askPass():
+    dbPass = input("Please enter the database password: ")
+    return dbPass
 
 
-dbPass = input("Please enter the database password: ")
+
+dbPass = askPass()
 conn = mysql.connector.connect(user = 'root',
                            password = dbPass,
                            host = 'localhost')
