@@ -102,7 +102,7 @@ def lookupDoctor():
 def displayAll():
     print("All the data will be displayed")
     mycursor.execute("USE MOGRENT")
-    mycursor.execute("SELECT * FROM hospital, doctor, patient, prescription")
+    mycursor.execute("SELECT * FROM hospital")
     print(mycursor.fetchall())
     print("-----------------------------------------------------")
     main()
@@ -110,9 +110,11 @@ def close():
     exit()
 
 
+
+dbPass = input("Please enter the database password: ")
 conn = mysql.connector.connect(user = 'root',
-                           password = '#ALC2016',
+                           password = dbPass,
                            host = 'localhost')
 mycursor = conn.cursor()
-
 main()
+
