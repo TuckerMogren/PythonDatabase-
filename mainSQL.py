@@ -108,7 +108,8 @@ def displayAll():
     main()
 def close():
     exit()
-
+#ALC2016
+    
 def askPass():
     dbPass = input("Please enter the database password: ")
     return dbPass
@@ -119,6 +120,13 @@ dbPass = askPass()
 conn = mysql.connector.connect(user = 'root',
                            password = dbPass,
                            host = 'localhost')
+
+##conn = mysql.connector.connect(user = 'mogrent',
+##                               password = dbPass,
+##                               host = 'cs350tucker.czmjbuzc8xmb.us-east-2.rds.amazonaws.com',
+##                               database = 'Medical'
+##                           )
 mycursor = conn.cursor()
 main()
+conn.close()
 
