@@ -101,7 +101,6 @@ def lookupDoctor():
     main()
 def displayAll():
     print("All the data will be displayed")
-    mycursor.execute("USE MOGRENT")
     mycursor.execute("SELECT * FROM hospital")
     print(mycursor.fetchall())
     print("-----------------------------------------------------")
@@ -111,21 +110,21 @@ def close():
 #ALC2016
     
 def askPass():
-    dbPass = input("Please enter the database password: ")
+    dbPass = str(input("Please enter the database password: "))
     return dbPass
 
 
 
 dbPass = askPass()
-conn = mysql.connector.connect(user = 'root',
-                           password = dbPass,
-                           host = 'localhost')
 
-##conn = mysql.connector.connect(user = 'mogrent',
-##                               password = dbPass,
-##                               host = 'cs350tucker.czmjbuzc8xmb.us-east-2.rds.amazonaws.com',
-##                               database = 'Medical'
-##                           )
+dbFig = {'user': 'mogrent',
+        'password': dbPass,
+         'host': 'cs350tucker.czmjbuzc8xmb.us-east-2.rds.amazonaws.com',
+         'database': 'Medical',
+         'raise_on_warnings': True,
+         'use_pure': False,
+}
+conn = mysql.connector.connect(**dbFig)
 mycursor = conn.cursor()
 main()
 conn.close()
