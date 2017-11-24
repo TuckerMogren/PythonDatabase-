@@ -109,8 +109,9 @@ def displayAll():
                 \nDoctor First Name: {}\nDoctor Last Name: {}\nDoctor ID: {}
                 \nHospital Name: {}\nHospital ID: {}\n""".format(fName, lName, patientID, presName, dosageMG, presID, fname, lname, docID, hName, hospitalID)
               )
+        print("-------------------------NEXT RESULT----------------------------")
 
-    print("-----------------------------------------------------")
+    print("------------------------------MAIN MENU-----------------------------")
     main()
 def close():
     exit()
@@ -122,7 +123,6 @@ def askPass():
 
 
 dbPass = askPass()
-
 dbFig = {'user': 'mogrent',
         'password': dbPass,
          'host': 'cs350tucker.czmjbuzc8xmb.us-east-2.rds.amazonaws.com',
@@ -130,10 +130,10 @@ dbFig = {'user': 'mogrent',
          'raise_on_warnings': True,
          'use_pure': False,
 }
-
-    
 conn = mysql.connector.connect(**dbFig)
 mycursor = conn.cursor()
+
+
 main()
 conn.close()
 
