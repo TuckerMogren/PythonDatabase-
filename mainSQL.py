@@ -3,8 +3,8 @@ import mysql.connector
 import getpass
 def mainMenu():
     print("1. Input a new Docor\n")
-    print("2. Input a new Patient\n")
-    print("3. Input a new Prescription\n")
+    print("2. Input a new Prescription\n")
+    print("3. Input a new Patient\n")
     print("4. Lookup Hospital\n")
     print("5. Lookup Patient\n")
     print("6. Loop up Prescription\n")
@@ -21,9 +21,9 @@ def main():
     if temp == 1:
         inputDoctor()
     if temp == 2:
-        inputPatient()
-    if temp == 3:
         inputPrescription()
+    if temp == 3:
+        inputPatient()
     if temp == 4:
         lookupHospital()
     if temp == 5:
@@ -73,37 +73,45 @@ def inputPrescription():
 def lookupHospital():
     zipCode = input("Enter the zip code of the hospital to search by: ")
     mycursor.execute("SELECT * FROM hospital WHERE zipcode = (%s)" %(zipCode))
-    print(mycursor.fetchall())
+    for(hospitalID, hName, street, city, state, zipCode) in mycursor:
+        print("Hospital ID: {}\nHospital Name: {}\nStreet: {}\nCity: {}\nState: {}\nZip Code: {}".format(hospitalID, hName, street, city, state, zipCode))
     print("-----------------------------------------------------")
     main()
 def lookupPatient():
     doB = int(input("Enter the patients date of birth to search by: "))
     mycursor.execute("SELECT * FROM patient WHERE DOB = (%s)" %(doB))
-    print(mycursor.fetchall())
+    for(patientID, fName, lName, DOB, cellPhone, homePhone, presID) in mycursor:
+        print("Patient ID: {}\nPatient First Name: {}\nPatient Last Name: {}\nPatient DOB: {}\nPatient Cell Phone: {}\nPatient Home Phone: {}\nPatient's Prescription ID: {}".format(patientID, fName, lName, DOB, cellPhone, homePhone, presID))
     print("-----------------------------------------------------")
     main()
 def lookupPrescription():
     presID = input("Enter the prescription ID to search by: ")
     mycursor.execute("SELECT * FROM prescription WHERE presID = (%s)" %(presID))
-    print(mycursor.fetchall())
+    for(presID, presName, presDate, dosageMG, docID) in mycursor:
+        print("Prescription ID: {}\nPrescription Name: {}\nPrescribed Date: {}\nDosage: {}Mg\nPrescribing Doctor ID: {}".format(presID, presName, presDate, dosageMG, docID))
     print("-----------------------------------------------------")
     main()
 def lookupDoctor():
     fname = input("Enter a first name to search by: ")
     mycursor.execute("SELECT * FROM doctor WHERE fName = ('%s')" %(fname))
-    print(mycursor.fetchone())
+    for(docID, fName, lName, docPhone, hosID) in mycursor:
+        print("Doctor ID: {}\nDoctor First Name: {}\nDoctor Last Name: {}\nDoctor Phone Number: {}\nDoctor's Assiocated Hospital ID: {}".format(docID, fName, lName, docPhone, hosID))
     print("-----------------------------------------------------")
     main()
 def displayAll():
-    print("All the data will be displayed")
+    print("All the data will be displayed\n")
     mycursor.execute("""SELECT patient.fName, patient.lName, patient.patientID, prescription.presName, prescription.dosageMG, prescription.presID, doctor.fname, doctor.lname, doctor.docID, hospital.hName, hospital.hospitalID
                         FROM hospital, doctor, patient, prescription
                         WHERE hospital.hospitalID = doctor.hosID
                         AND doctor.docID = prescription.docID
                         AND prescription.presID = patient.presID;""")
     for(fName, lName, patientID, presName, dosageMG, presID, fname, lname, docID, hName, hospitalID) in mycursor:
-        print("Patient First Name: {}\nPatient Last Name: {}\nPatient ID: {}\nPrescription Name: {}\nPerscription Dosage: {}MG's\nPrescription ID: {}\nDoctor First Name: {}\nDoctor Last Name: {}\nDoctor ID: {}\nHospital Name: {}\nHospital ID: {}\n".format(fName, lName, patientID, presName, dosageMG, presID, fname, lname, docID, hName, hospitalID))
-    ##print(mycursor.fetchall())
+        print("""Patient First Name: {}\nPatient Last Name: {}\nPatient ID: {}
+                \nPrescription Name: {}\nPerscription Dosage: {}MG's\nPrescription ID: {}
+                \nDoctor First Name: {}\nDoctor Last Name: {}\nDoctor ID: {}
+                \nHospital Name: {}\nHospital ID: {}\n""".format(fName, lName, patientID, presName, dosageMG, presID, fname, lname, docID, hName, hospitalID)
+              )
+
     print("-----------------------------------------------------")
     main()
 def close():
