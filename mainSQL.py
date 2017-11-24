@@ -91,7 +91,7 @@ def lookupPrescription():
 def lookupDoctor():
     fname = input("Enter a first name to search by: ")
     mycursor.execute("SELECT * FROM doctor WHERE fName = ('%s')" %(fname))
-    print(mycursor.fetchall())
+    print(mycursor.fetchone())
     print("-----------------------------------------------------")
     main()
 def displayAll():
@@ -101,7 +101,9 @@ def displayAll():
                         WHERE hospital.hospitalID = doctor.hosID
                         AND doctor.docID = prescription.docID
                         AND prescription.presID = patient.presID;""")
-    print(mycursor.fetchall())
+    for(fName, lName, patientID, presName, dosageMG, presID, fname, lname, docID, hName, hospitalID) in mycursor:
+        print("Patient First Name: {}\nPatient Last Name: {}\nPatient ID: {}\nPrescription Name: {}\nPerscription Dosage: {}MG's\nPrescription ID: {}\nDoctor First Name: {}\nDoctor Last Name: {}\nDoctor ID: {}\nHospital Name: {}\nHospital ID: {}\n".format(fName, lName, patientID, presName, dosageMG, presID, fname, lname, docID, hName, hospitalID))
+    ##print(mycursor.fetchall())
     print("-----------------------------------------------------")
     main()
 def close():
