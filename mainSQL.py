@@ -2,7 +2,6 @@ import sqlCommand
 import mysql.connector
 import getpass
 def mainMenu():
-    
     print("1. Input a new Docor\n")
     print("2. Input a new Patient\n")
     print("3. Input a new Prescription\n")
@@ -12,7 +11,9 @@ def mainMenu():
     print("7. Look up Doctor\n")
     print("8. Display all data\n")
     print("9. Exit\n")
-    choice = int(input("Please enter a choice: "))
+    choice = 0
+    while choice != 1 and choice != 2 and choice != 3 and choice != 4 and choice != 5 and choice != 6 and choice != 7 and choice != 8 and choice != 9:
+        choice = int(input("Please enter a choice: "))
     return choice
 
 def main():
@@ -64,7 +65,6 @@ def inputPrescription():
     presDate = input("Please input the prescription's date: ")
     dosageMG = input("PlMogrease input the prescription's dosage in MG: ")
     docID = input("Please input the prescriptions assiocated doctor's ID: ")
-    mycursor.execute("USE MOGRENT")
     mycursor.execute("INSERT INTO prescription VALUES(%s,'%s','%s','%s',%s) " %(presID, presName, presDate, dosageMG, docID))
     conn.commit()
     print("-----------------------------------------------------")
@@ -96,7 +96,11 @@ def lookupDoctor():
     main()
 def displayAll():
     print("All the data will be displayed")
-    mycursor.execute("SELECT * FROM hospital")
+    mycursor.execute("""SELECT patient.fName, patient.lName, patient.patientID, prescription.presName, prescription.dosageMG, prescription.presID, doctor.fname, doctor.lname, doctor.docID, hospital.hName, hospital.hospitalID
+                        FROM hospital, doctor, patient, prescription
+                        WHERE hospital.hospitalID = doctor.hosID
+                        AND doctor.docID = prescription.docID
+                        AND prescription.presID = patient.presID;""")
     print(mycursor.fetchall())
     print("-----------------------------------------------------")
     main()
@@ -118,6 +122,8 @@ dbFig = {'user': 'mogrent',
          'raise_on_warnings': True,
          'use_pure': False,
 }
+
+    
 conn = mysql.connector.connect(**dbFig)
 mycursor = conn.cursor()
 main()
