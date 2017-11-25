@@ -1,4 +1,5 @@
 import mysql.connector
+import os
 def mainMenu():
     print("1. Input a new Docor\n")
     print("2. Input a new Prescription\n")
@@ -119,10 +120,15 @@ def close():
 def askPass():
     dbPass = str(input("Please enter the database password: "))
     return dbPass
+def clearSc():
+    clear = "\n" * 40
+    
+    print(clear)
 
 
 
 dbPass = askPass()
+clearSc()
 dbFig = {'user': 'mogrent',
         'password': dbPass,
          'host': 'cs350tucker.czmjbuzc8xmb.us-east-2.rds.amazonaws.com',
