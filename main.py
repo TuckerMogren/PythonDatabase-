@@ -14,4 +14,4 @@ except:
 try:
     conn.close()
 except:
-    print("ERRPR: When closing the connection")
+    print("ERROR: When closing the connection")

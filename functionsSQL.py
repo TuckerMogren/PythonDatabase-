@@ -118,6 +118,7 @@ def close():
     exit()
     
 def askPass():
+    
     dbPass = str(input("Please enter the database password: "))
     return dbPass
 
@@ -132,7 +133,16 @@ dbFig = {'user': 'mogrent',
          'raise_on_warnings': True,
          'use_pure': False,
 }
-conn = mysql.connector.connect(**dbFig)
-mycursor = conn.cursor()
+try:
+    conn = mysql.connector.connect(**dbFig)
+except:
+    print("Incorrect Password")
+    close()
+
+
+try:
+    mycursor = conn.cursor()
+except:
+    print("Database Error")
 
 
