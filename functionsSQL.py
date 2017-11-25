@@ -124,9 +124,9 @@ def askPass():
 def clearSc():
     clear = "\n" * 40
     print(clear)
-
+dbPass = askPass()
 dbFig = {'user': 'mogrent',
-        'password': askPass(),
+        'password': dbPass,
          'host': 'cs350tucker.czmjbuzc8xmb.us-east-2.rds.amazonaws.com',
          'database': 'Medical',
          'raise_on_warnings': True,
