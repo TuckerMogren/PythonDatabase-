@@ -1,5 +1,4 @@
 import mysql.connector
-import os
 def mainMenu():
     print("1. Input a new Docor\n")
     print("2. Input a new Prescription\n")
